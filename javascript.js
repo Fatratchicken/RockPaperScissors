@@ -1,6 +1,11 @@
 let PLAYER_POINTS = 0;
 let COMPUTER_POINTS = 0;
 
+const rockButton = document.getElementById("rock");
+const paperButton = document.getElementById("paper");
+const scissorsButton = document.getElementById("scissors");
+const resultBox = document.querySelector(".result");
+
 function getInput(){
     let input = prompt("Enter Rock, Paper or Scissors");
     input = input.charAt(0).toLocaleUpperCase() + input.slice(1).toLocaleLowerCase();
@@ -38,13 +43,19 @@ function getRoundWinner(player, computer){
 
 }
 
-function gameRound(){
-    const playerInput = getInput();
+function gameRound(playerInput){
     const computerInput = getComputerInput();
 
     const winner = getRoundWinner(playerInput, computerInput);
+    resultBox.textContent = `${winner} you: ${PLAYER_POINTS} computer: ${COMPUTER_POINTS}`;
 
-    alert(winner);
+    if (PLAYER_POINTS >= 5 || COMPUTER_POINTS >= 5){
+        alert(`${winner} is winner!`)
+        PLAYER_POINTS = 0;
+        COMPUTER_POINTS = 0;
+    }
+
+
 }
 
 function gamePlay(rounds){
@@ -65,4 +76,9 @@ function gamePlay(rounds){
     }
 }
 
-gamePlay(5);
+
+rockButton.addEventListener('click', () => gameRound("Rock"));
+paperButton.addEventListener('click', () => gameRound("Paper"));
+scissorsButton.addEventListener('click', () => gameRound("Scissors"));
+
+
